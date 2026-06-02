@@ -44,18 +44,18 @@ export function GatewayMenuPanel({
   const inferenceReady = gatewayOpen && inferenceStatus?.ready === true
 
   const connectionLabel = gatewayOpen
-    ? 'Connected'
+    ? '已连接'
     : gatewayConnecting
-      ? 'Connecting'
-      : prettyState(gatewayState || 'offline')
+      ? '连接中'
+      : prettyState(gatewayState || '离线')
 
   const inferenceLabel = gatewayOpen
     ? inferenceStatus?.ready
-      ? 'Inference ready'
+      ? '推理就绪'
       : inferenceStatus
         ? 'Inference not ready'
         : 'Checking inference'
-    : 'Disconnected'
+    : '已断开'
 
   const platforms = Object.entries(statusSnapshot?.gateway_platforms || {}).sort(([l], [r]) => l.localeCompare(r))
   const recentLogs = logLines.slice(-5)

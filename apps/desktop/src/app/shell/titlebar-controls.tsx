@@ -74,7 +74,7 @@ export function TitlebarControls({
     {
       icon: <Codicon name="layout-sidebar-left" />,
       id: 'sidebar',
-      label: sidebarOpen ? 'Hide sidebar' : 'Show sidebar',
+      label: sidebarOpen ? '隐藏侧栏' : '显示侧栏',
       onSelect: () => {
         triggerHaptic('tap')
         toggleSidebarOpen()
@@ -84,12 +84,12 @@ export function TitlebarControls({
       active: commandCenterOpen,
       icon: <Codicon name="search" />,
       id: 'search',
-      label: 'Search',
+      label: '搜索',
       onSelect: () => {
         triggerHaptic('open')
         onOpenSearch()
       },
-      title: 'Search sessions, views, and actions'
+      title: '搜索会话、视图和操作'
     },
     ...leftTools
   ]
@@ -98,7 +98,7 @@ export function TitlebarControls({
     active: fileBrowserOpen,
     icon: <Codicon name="layout-sidebar-right" />,
     id: 'right-sidebar',
-    label: fileBrowserOpen ? 'Hide right sidebar' : 'Show right sidebar',
+    label: fileBrowserOpen ? '隐藏右侧栏' : '显示右侧栏',
     onSelect: () => {
       triggerHaptic('tap')
       toggleFileBrowserOpen()
@@ -117,7 +117,7 @@ export function TitlebarControls({
     {
       icon: <Codicon name="settings-gear" />,
       id: 'settings',
-      label: 'Open settings',
+      label: '打开设置',
       onSelect: () => {
         triggerHaptic('open')
         onOpenSettings()

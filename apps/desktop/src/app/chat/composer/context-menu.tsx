@@ -81,9 +81,9 @@ export function ContextMenu({
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent className="w-72">
             {[
-              { label: 'Code review', text: 'Please review this for bugs, regressions, and missing tests.' },
-              { label: 'Implementation plan', text: 'Please make a concise implementation plan before changing code.' },
-              { label: 'Explain this', text: 'Please explain how this works and point me to the key files.' }
+              { label: '代码审查', text: 'Please review this for bugs, regressions, and missing tests.' },
+              { label: '实现方案', text: 'Please make a concise implementation plan before changing code.' },
+              { label: '解释这段', text: 'Please explain how this works and point me to the key files.' }
             ].map(snippet => (
               <ContextMenuItem icon={MessageSquareText} key={snippet.label} onSelect={() => onInsertText(snippet.text)}>
                 {snippet.label}

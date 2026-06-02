@@ -396,7 +396,7 @@ export function ArtifactsView({ setStatusbarItemGroup: _setStatusbarItemGroup, .
 
       setArtifacts(nextArtifacts.sort((a, b) => b.timestamp - a.timestamp))
     } catch (err) {
-      notifyError(err, 'Artifacts failed to load')
+      notifyError(err, '产物加载失败')
       setArtifacts([])
     } finally {
       setRefreshing(false)
@@ -480,7 +480,7 @@ export function ArtifactsView({ setStatusbarItemGroup: _setStatusbarItemGroup, .
         window.open(href, '_blank', 'noopener,noreferrer')
       }
     } catch (err) {
-      notifyError(err, 'Open failed')
+      notifyError(err, '打开失败')
     }
   }, [])
 
@@ -522,12 +522,12 @@ export function ArtifactsView({ setStatusbarItemGroup: _setStatusbarItemGroup, .
       searchPlaceholder="Search artifacts..."
       searchTrailingAction={
         <Button
-          aria-label={refreshing ? 'Refreshing artifacts' : 'Refresh artifacts'}
+          aria-label={refreshing ? '刷新产物' : '刷新产物'}
           className="text-(--ui-text-tertiary) hover:bg-transparent hover:text-foreground"
           disabled={refreshing}
           onClick={() => void refreshArtifacts()}
           size="icon-xs"
-          title={refreshing ? 'Refreshing artifacts' : 'Refresh artifacts'}
+          title={refreshing ? '刷新产物' : '刷新产物'}
           type="button"
           variant="ghost"
         >
@@ -780,7 +780,7 @@ function PrimaryCell({ artifact, ctx }: { artifact: ArtifactRecord; ctx: CellCtx
 function LocationCell({ artifact }: { artifact: ArtifactRecord; ctx: CellCtx }) {
   const isLink = artifact.kind === 'link'
   const value = isLink ? hostPathLabel(artifact.value) : artifact.value
-  const copyLabel = isLink ? 'Copy URL' : 'Copy path'
+  const copyLabel = isLink ? '复制网址' : '复制路径'
 
   return (
     <div className="group/location flex min-w-0 items-center gap-1.5">
@@ -823,21 +823,21 @@ const ARTIFACT_COLUMNS: readonly ArtifactColumn[] = [
   {
     Cell: PrimaryCell,
     bodyClassName: 'p-0',
-    header: filter => (filter === 'link' ? 'Link title' : filter === 'file' ? 'Name' : 'Title / name'),
+    header: filter => (filter === 'link' ? 'Link title' : filter === 'file' ? '名称' : 'Title / name'),
     id: 'primary',
     width: filter => (filter === 'link' ? 'w-[50%]' : 'w-[35%]')
   },
   {
     Cell: LocationCell,
     bodyClassName: 'px-2.5 py-1.5',
-    header: filter => (filter === 'link' ? 'URL' : filter === 'file' ? 'Path' : 'Location'),
+    header: filter => (filter === 'link' ? '网址' : filter === 'file' ? '路径' : '位置'),
     id: 'location',
     width: filter => (filter === 'link' ? 'w-[30%]' : 'w-[41%]')
   },
   {
     Cell: SessionCell,
     bodyClassName: 'p-0',
-    header: () => 'Session',
+    header: () => '会话',
     id: 'session',
     width: filter => (filter === 'link' ? 'w-[20%]' : 'w-[24%]')
   }

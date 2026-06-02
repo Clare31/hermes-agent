@@ -49,14 +49,14 @@ function loadErrorTitle(error: PreviewLoadErrorState): string {
   const description = error.description.toLowerCase()
 
   if (description.includes('module script') || description.includes('mime type')) {
-    return 'Preview app failed to boot'
+    return '预览应用启动失败'
   }
 
   if (description.includes('connection') || description.includes('refused') || description.includes('not found')) {
-    return 'Server not found'
+    return '未找到服务器'
   }
 
-  return 'Preview failed to load'
+  return '预览加载失败'
 }
 
 function isModuleMimeError(message: string): boolean {
@@ -97,12 +97,12 @@ function PreviewLoadError({
         </>
       }
       consoleHeight={consoleHeight}
-      primaryAction={{ label: 'Try again', onClick: onRetry }}
+      primaryAction={{ label: '重试', onClick: onRetry }}
       secondaryAction={
         onRestartServer
           ? {
               disabled: restarting,
-              label: restarting ? 'Hermes is restarting...' : 'Ask Hermes to restart the server',
+              label: restarting ? 'Hermes 正在重启…' : '让 Hermes 重启服务器',
               onClick: onRestartServer
             }
           : undefined
@@ -243,7 +243,7 @@ export function PreviewPane({
 
       notify({
         kind: 'info',
-        title: 'Restarting preview server',
+        title: '正在重启预览服务器',
         message: 'Hermes is working in the background. Watch the preview console for progress.',
         durationMs: 4000
       })
@@ -286,14 +286,14 @@ export function PreviewPane({
               active: consoleOpen,
               icon: <PreviewConsoleTitlebarIcon consoleState={consoleState} />,
               id: `${TITLEBAR_GROUP_ID}-console`,
-              label: consoleOpen ? 'Hide preview console' : 'Show preview console',
+              label: consoleOpen ? '隐藏预览控制台' : '显示预览控制台',
               onSelect: () => consoleState.setOpen(open => !open)
             },
             {
               active: devtoolsOpen,
               icon: <Bug />,
               id: `${TITLEBAR_GROUP_ID}-devtools`,
-              label: devtoolsOpen ? 'Hide preview DevTools' : 'Open preview DevTools',
+              label: devtoolsOpen ? '隐藏预览开发者工具' : '打开预览开发者工具',
               onSelect: toggleDevTools
             }
           ]
@@ -337,7 +337,7 @@ export function PreviewPane({
 
     lastRestartEventRef.current = eventKey
     appendConsoleEntry({
-      level: previewServerRestart.status === 'error' ? 2 : 1,
+      level: previewServerRestart.status === '错误' ? 2 : 1,
       message:
         previewServerRestart.status === 'running'
           ? previewServerRestart.message
@@ -352,14 +352,14 @@ export function PreviewPane({
       reloadPreview()
       notify({
         kind: 'success',
-        title: 'Preview server restarted',
+        title: '预览服务器已重启',
         message: previewServerRestart.message?.slice(0, 160) || 'Reloading the preview now.',
         durationMs: 3500
       })
-    } else if (previewServerRestart.status === 'error') {
+    } else if (previewServerRestart.status === '错误') {
       notify({
         kind: 'warning',
-        title: 'Preview restart failed',
+        title: '预览重启失败',
         message: previewServerRestart.message?.slice(0, 200) || 'Hermes could not restart the server.',
         durationMs: 6000
       })
@@ -396,7 +396,7 @@ export function PreviewPane({
 
     appendConsoleEntry({
       level: 1,
-      message: 'Workspace changed, reloading preview'
+      message: '工作区已更改，正在重新加载预览'
     })
     reloadPreview()
   }, [appendConsoleEntry, reloadPreview, reloadRequest, target.kind])
@@ -572,7 +572,7 @@ export function PreviewPane({
       })
       setLoadError({
         code: errorCode,
-        description: detail.errorDescription || 'The preview page could not be reached.',
+        description: detail.errorDescription || '无法访问预览页面。',
         url: detail.validatedURL || webview.getURL?.() || target.url
       })
       setLoading(false)
@@ -614,7 +614,7 @@ export function PreviewPane({
                 target="_blank"
                 title={`Open ${currentUrl}`}
               >
-                {previewLabel || 'Preview'}
+                {previewLabel || '预览'}
               </a>
             </div>
           </div>

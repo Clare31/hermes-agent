@@ -172,7 +172,7 @@ export function SidebarSessionRow({
 function SidebarRowDot({ isWorking, className }: { isWorking: boolean; className?: string }) {
   return (
     <span
-      aria-label={isWorking ? 'Session running' : undefined}
+      aria-label={isWorking ? '会话运行中' : undefined}
       className={cn(
         'rounded-full',
         isWorking

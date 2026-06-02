@@ -210,10 +210,10 @@ export function VoicePlaybackActivity() {
   const preparing = playback.status === 'preparing'
 
   const title = preparing
-    ? 'Preparing audio'
+    ? '准备音频中'
     : playback.source === 'voice-conversation'
-      ? 'Speaking response'
-      : 'Reading aloud'
+      ? '朗读回复中'
+      : '正在朗读'
 
   return (
     <div

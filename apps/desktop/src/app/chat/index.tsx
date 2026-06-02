@@ -97,7 +97,7 @@ function ChatHeader({
   const sessions = useStore($sessions)
   const pinnedSessionIds = useStore($pinnedSessionIds)
   const activeStoredSession = sessions.find(session => session.id === selectedSessionId) || null
-  const title = activeStoredSession ? sessionTitle(activeStoredSession) : 'New session'
+  const title = activeStoredSession ? sessionTitle(activeStoredSession) : '新建会话'
   const selectedIsPinned = selectedSessionId ? pinnedSessionIds.includes(selectedSessionId) : false
 
   return (
@@ -188,7 +188,7 @@ export function ChatView({
       }
 
       if (!gateway) {
-        throw new Error('Hermes gateway unavailable')
+        throw new Error('Hermes 网关不可用')
       }
 
       return gateway.request<ModelOptionsResponse>('model.options', { session_id: activeSessionId })
@@ -212,7 +212,7 @@ export function ChatView({
       },
       tools: {
         enabled: true,
-        label: 'Add context',
+        label: '添加上下文',
         suggestions: contextSuggestions
       },
       voice: {

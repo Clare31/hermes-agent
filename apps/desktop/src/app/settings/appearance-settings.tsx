@@ -122,20 +122,20 @@ export function AppearanceSettings() {
                 Product hides raw tool payloads; Technical shows full input/output.
               </div>
             </div>
-            <Pill>{toolViewMode === 'technical' ? 'Technical' : 'Product'}</Pill>
+            <Pill>{toolViewMode === 'technical' ? '详细模式' : '简洁模式'}</Pill>
           </div>
           <div className="grid gap-2 sm:grid-cols-2">
             {(
               [
                 {
                   id: 'product',
-                  label: 'Product',
-                  description: 'Human-friendly tool activity with concise summaries.'
+                  label: '简洁模式',
+                  description: '人性化工具活动，包含简洁摘要。'
                 },
                 {
                   id: 'technical',
-                  label: 'Technical',
-                  description: 'Include raw tool args/results and low-level details.'
+                  label: '详细模式',
+                  description: '包含原始工具参数/结果和底层细节。'
                 }
               ] as const
             ).map(option => {

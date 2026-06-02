@@ -57,7 +57,7 @@ function AttachmentPill({ attachment, onRemove }: { attachment: ComposerAttachme
 
       setCurrentSessionPreviewTarget(preview, 'manual', target)
     } catch (error) {
-      notifyError(error, 'Preview unavailable')
+      notifyError(error, '预览不可用')
     }
   }
 

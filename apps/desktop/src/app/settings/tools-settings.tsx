@@ -29,7 +29,7 @@ export function ToolsSettings({ query }: SearchProps) {
         setSkills(s)
         setToolsets(t)
       })
-      .catch(err => notifyError(err, 'Capabilities failed to load'))
+      .catch(err => notifyError(err, '功能加载失败'))
 
     return () => void (cancelled = true)
   }, [])
@@ -37,7 +37,7 @@ export function ToolsSettings({ query }: SearchProps) {
   const refreshToolsets = useCallback(() => {
     getToolsets()
       .then(setToolsets)
-      .catch(err => notifyError(err, 'Toolsets failed to refresh'))
+      .catch(err => notifyError(err, '工具集刷新失败'))
   }, [])
 
   const filteredSkills = useMemo(() => {
@@ -96,7 +96,7 @@ export function ToolsSettings({ query }: SearchProps) {
       setSkills(c => c?.map(s => (s.name === skill.name ? { ...s, enabled } : s)) ?? c)
       notify({
         kind: 'success',
-        title: enabled ? 'Skill enabled' : 'Skill disabled',
+        title: enabled ? '技能已启用' : '技能已禁用',
         message: `${skill.name} applies to new sessions.`
       })
     } catch (err) {
@@ -114,7 +114,7 @@ export function ToolsSettings({ query }: SearchProps) {
       setToolsets(c => c?.map(t => (t.name === toolset.name ? { ...t, enabled, available: enabled } : t)) ?? c)
       notify({
         kind: 'success',
-        title: enabled ? 'Toolset enabled' : 'Toolset disabled',
+        title: enabled ? '工具集已启用' : '工具集已禁用',
         message: `${asText(toolset.label || toolset.name)} applies to new sessions.`
       })
     } catch (err) {
@@ -181,7 +181,7 @@ export function ToolsSettings({ query }: SearchProps) {
                       type="button"
                     >
                       <Pill tone={toolset.configured ? 'primary' : 'muted'}>
-                        {toolset.configured ? 'Configured' : 'Needs keys'}
+                        {toolset.configured ? '已配置' : '需要密钥'}
                       </Pill>
                     </button>
                     <Switch

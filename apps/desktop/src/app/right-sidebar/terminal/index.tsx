@@ -24,7 +24,7 @@ export function TerminalTab({ cwd, onAddSelectionToChat }: TerminalTabProps) {
   })
 
   const takeover = useStore($terminalTakeover)
-  const label = takeover ? 'Return to split view' : 'Focus terminal view'
+  const label = takeover ? '返回分屏视图' : '聚焦终端视图'
 
   const toggleTakeover = () => {
     // Pre-select the Terminal tab so the slot is ready to host us on return.

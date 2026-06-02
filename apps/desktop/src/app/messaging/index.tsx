@@ -28,15 +28,15 @@ interface MessagingViewProps extends React.ComponentProps<'section'> {
 type EditMap = Record<string, Record<string, string>>
 
 const STATE_LABELS: Record<string, string> = {
-  connected: 'Connected',
-  connecting: 'Connecting',
-  disabled: 'Disabled',
-  fatal: 'Error',
-  gateway_stopped: 'Messaging gateway stopped',
-  not_configured: 'Needs setup',
-  pending_restart: 'Restart needed',
-  retrying: 'Retrying',
-  startup_failed: 'Startup failed'
+  connected: '已连接',
+  connecting: '连接中',
+  disabled: '已禁用',
+  fatal: '错误',
+  gateway_stopped: '消息网关已停止',
+  not_configured: '需要配置',
+  pending_restart: '需要重启',
+  retrying: '重试中',
+  startup_failed: '启动失败'
 }
 
 const PLATFORM_TINTS: Record<string, string> = {
@@ -101,96 +101,96 @@ const trimEdits = (edits: Record<string, string>): Record<string, string> =>
 
 const FIELD_COPY: Record<string, { advanced?: boolean; help?: string; label: string; placeholder?: string }> = {
   TELEGRAM_BOT_TOKEN: {
-    label: 'Bot token',
+    label: '机器人令牌',
     help: 'Create a bot with @BotFather, then paste the token it gives you.',
-    placeholder: '123456:ABC...'
+    placeholder: '123456:ABC…'
   },
   TELEGRAM_ALLOWED_USERS: {
-    label: 'Allowed Telegram user IDs',
+    label: '允许的 Telegram 用户 ID',
     help: 'Recommended. Comma-separated numeric IDs from @userinfobot. Without this, anyone can DM your bot.'
   },
   TELEGRAM_PROXY: {
-    label: 'Proxy URL',
+    label: '代理地址',
     help: 'Only needed on networks where Telegram is blocked.',
     advanced: true
   },
   DISCORD_BOT_TOKEN: {
-    label: 'Bot token',
+    label: '机器人令牌',
     help: 'Create an application in the Discord Developer Portal, add a bot, then paste its token.'
   },
   DISCORD_ALLOWED_USERS: {
-    label: 'Allowed Discord user IDs',
+    label: '允许的 Discord 用户 ID',
     help: 'Recommended. Comma-separated Discord user IDs.'
   },
   DISCORD_REPLY_TO_MODE: {
-    label: 'Reply style',
+    label: '回复样式',
     help: 'first, all, or off.',
     advanced: true
   },
   SLACK_BOT_TOKEN: {
-    label: 'Slack bot token',
+    label: 'Slack 机器人令牌',
     help: 'Starts with xoxb-. Found under OAuth & Permissions after installing your Slack app.',
     placeholder: 'xoxb-...'
   },
   SLACK_APP_TOKEN: {
-    label: 'Slack app token',
+    label: 'Slack 应用令牌',
     help: 'Starts with xapp-. Required for Socket Mode.',
     placeholder: 'xapp-...'
   },
   SLACK_ALLOWED_USERS: {
-    label: 'Allowed Slack user IDs',
+    label: '允许的 Slack 用户 ID',
     help: 'Recommended. Comma-separated Slack user IDs.'
   },
   MATTERMOST_URL: {
-    label: 'Server URL',
-    placeholder: 'https://mattermost.example.com'
+    label: '服务器地址',
+    placeholder: 'https://mattermost.示例.com'
   },
   MATTERMOST_TOKEN: {
-    label: 'Bot token'
+    label: '机器人令牌'
   },
   MATTERMOST_ALLOWED_USERS: {
-    label: 'Allowed user IDs',
+    label: '允许的用户 ID',
     help: 'Recommended. Comma-separated Mattermost user IDs.'
   },
   MATRIX_HOMESERVER: {
-    label: 'Homeserver URL',
+    label: '家庭服务器地址',
     placeholder: 'https://matrix.org'
   },
   MATRIX_ACCESS_TOKEN: {
-    label: 'Access token'
+    label: '访问令牌'
   },
   MATRIX_USER_ID: {
-    label: 'Bot user ID',
-    placeholder: '@hermes:example.org'
+    label: '机器人用户 ID',
+    placeholder: '@hermes:示例.org'
   },
   MATRIX_ALLOWED_USERS: {
-    label: 'Allowed Matrix user IDs',
+    label: '允许的 Matrix 用户 ID',
     help: 'Recommended. Comma-separated user IDs in @user:server format.'
   },
   SIGNAL_HTTP_URL: {
-    label: 'Signal bridge URL',
+    label: 'Signal 桥接地址',
     placeholder: 'http://127.0.0.1:8080',
     help: 'URL of a running signal-cli REST bridge.'
   },
   SIGNAL_ACCOUNT: {
-    label: 'Phone number',
+    label: '手机号',
     help: 'The number registered with your signal-cli bridge.'
   },
   SIGNAL_ALLOWED_USERS: {
-    label: 'Allowed Signal users',
+    label: '允许的 Signal 用户',
     help: 'Recommended. Comma-separated Signal identifiers.'
   },
   WHATSAPP_ENABLED: {
-    label: 'Enable WhatsApp bridge',
+    label: '启用 WhatsApp 桥接',
     help: 'Set automatically by the toggle below. Leave alone unless you know you need it.',
     advanced: true
   },
   WHATSAPP_MODE: {
-    label: 'Bridge mode',
+    label: '桥接模式',
     advanced: true
   },
   WHATSAPP_ALLOWED_USERS: {
-    label: 'Allowed WhatsApp users',
+    label: '允许的 WhatsApp 用户',
     help: 'Recommended. Comma-separated phone numbers or WhatsApp IDs.'
   }
 }
@@ -225,7 +225,7 @@ export function MessagingView({ setStatusbarItemGroup: _setStatusbarItemGroup, .
       setPlatforms(result.platforms)
     } catch (err) {
       if (!silent) {
-        notifyError(err, 'Messaging platforms failed to load')
+        notifyError(err, '消息平台加载失败')
       }
     } finally {
       if (!silent) {
@@ -305,7 +305,7 @@ export function MessagingView({ setStatusbarItemGroup: _setStatusbarItemGroup, .
       notify({
         kind: 'success',
         title: enabled ? `${platform.name} enabled` : `${platform.name} disabled`,
-        message: 'Restart the gateway for this change to take effect.'
+        message: '重启网关以使更改生效。'
       })
     } catch (err) {
       notifyError(err, `Failed to update ${platform.name}`)
@@ -330,7 +330,7 @@ export function MessagingView({ setStatusbarItemGroup: _setStatusbarItemGroup, .
       notify({
         kind: 'success',
         title: `${platform.name} setup saved`,
-        message: 'Restart the gateway to reconnect with the new credentials.'
+        message: '重启网关以使用新凭据重新连接。'
       })
     } catch (err) {
       notifyError(err, `Failed to save ${platform.name}`)
@@ -495,7 +495,7 @@ function PlatformDetail({
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 <StatePill tone={stateTone(platform)}>{stateLabel(platform.state)}</StatePill>
                 <SetupPill active={platform.configured}>
-                  {platform.configured ? 'Credentials set' : 'Needs setup'}
+                  {platform.configured ? '凭据已设置' : '需要配置'}
                 </SetupPill>
                 {!platform.gateway_running && <SetupPill active={false}>Messaging gateway stopped</SetupPill>}
               </div>
@@ -604,7 +604,7 @@ function PlatformDetail({
               onCheckedChange={onToggle}
             />
             <span className="text-xs font-medium text-muted-foreground">
-              {platform.enabled ? 'Enabled' : 'Disabled'}
+              {platform.enabled ? '已启用' : '已禁用'}
             </span>
           </label>
 
@@ -612,7 +612,7 @@ function PlatformDetail({
             {hasEdits && <span className="text-xs text-muted-foreground">Unsaved changes</span>}
             <Button disabled={!hasEdits || isSavingEnv} onClick={onSave} size="sm">
               <Save />
-              {isSavingEnv ? 'Saving...' : 'Save changes'}
+              {isSavingEnv ? '保存中…' : '保存更改'}
             </Button>
           </div>
         </div>
@@ -688,7 +688,7 @@ function MessagingField({
           className="h-9 rounded-lg font-mono text-sm"
           id={`messaging-field-${field.key}`}
           onChange={event => onEdit(field.key, event.target.value)}
-          placeholder={field.is_set ? field.redacted_value || 'Replace current value' : copy.placeholder}
+          placeholder={field.is_set ? field.redacted_value || '替换当前值' : copy.placeholder}
           type={field.is_password ? 'password' : 'text'}
           value={edits[field.key] || ''}
         />

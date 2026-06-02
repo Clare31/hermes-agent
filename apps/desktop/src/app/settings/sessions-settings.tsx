@@ -42,7 +42,7 @@ export function SessionsSettings({ query }: SearchProps) {
       const result = await listSessions(ARCHIVED_FETCH_LIMIT, 0, 'only')
       setLocalSessions(result.sessions)
     } catch (err) {
-      notifyError(err, 'Could not load archived sessions')
+      notifyError(err, '无法加载已归档会话')
     } finally {
       setLoading(false)
     }
@@ -61,9 +61,9 @@ export function SessionsSettings({ query }: SearchProps) {
       // Surface it again in the sidebar without waiting for a full refresh.
       setSessions(prev => [{ ...session, archived: false }, ...prev.filter(s => s.id !== session.id)])
       triggerHaptic('selection')
-      notify({ durationMs: 2_000, kind: 'success', message: 'Restored' })
+      notify({ durationMs: 2_000, kind: 'success', message: '已恢复' })
     } catch (err) {
-      notifyError(err, 'Unarchive failed')
+      notifyError(err, '恢复失败')
     } finally {
       setBusyId(null)
     }
@@ -81,7 +81,7 @@ export function SessionsSettings({ query }: SearchProps) {
       setLocalSessions(prev => prev.filter(s => s.id !== session.id))
       triggerHaptic('warning')
     } catch (err) {
-      notifyError(err, 'Delete failed')
+      notifyError(err, '删除失败')
     } finally {
       setBusyId(null)
     }
@@ -117,7 +117,7 @@ export function SessionsSettings({ query }: SearchProps) {
 
       {filtered.length === 0 ? (
         <EmptyState
-          description={query.trim() ? 'No archived chats match your search.' : 'Archive a chat to hide it here.'}
+          description={query.trim() ? '没有与搜索匹配的已归档对话。' : '归档对话以将其隐藏在此处。'}
           title="Nothing archived"
         />
       ) : (

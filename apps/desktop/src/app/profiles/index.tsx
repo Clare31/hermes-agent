@@ -71,7 +71,7 @@ export function ProfilesView({
         return list.find(p => p.is_default)?.name ?? list[0]?.name ?? null
       })
     } catch (err) {
-      notifyError(err, 'Failed to load profiles')
+      notifyError(err, '加载配置失败')
     } finally {
       setRefreshing(false)
     }
@@ -91,7 +91,7 @@ export function ProfilesView({
         disabled: refreshing,
         icon: <Codicon name="refresh" spinning={refreshing} />,
         id: 'refresh-profiles',
-        label: refreshing ? 'Refreshing profiles' : 'Refresh profiles',
+        label: refreshing ? '刷新配置' : '刷新配置',
         onSelect: () => void refresh()
       }
     ])
@@ -116,7 +116,7 @@ export function ProfilesView({
       }
 
       await createProfile({ name: trimmed, clone_from_default: cloneFromDefault })
-      notify({ kind: 'success', title: 'Profile created', message: trimmed })
+      notify({ kind: 'success', title: '配置已创建', message: trimmed })
       setSelectedName(trimmed)
       await refresh()
     },
@@ -136,7 +136,7 @@ export function ProfilesView({
       }
 
       await renameProfile(from, target)
-      notify({ kind: 'success', title: 'Profile renamed', message: `${from} → ${target}` })
+      notify({ kind: 'success', title: '配置已重命名', message: `${from} → ${target}` })
       setSelectedName(target)
       await refresh()
     },
@@ -152,12 +152,12 @@ export function ProfilesView({
 
     try {
       await deleteProfile(pendingDelete.name)
-      notify({ kind: 'success', title: 'Profile deleted', message: pendingDelete.name })
+      notify({ kind: 'success', title: '配置已删除', message: pendingDelete.name })
       setPendingDelete(null)
       setSelectedName(null)
       await refresh()
     } catch (err) {
-      notifyError(err, 'Failed to delete profile')
+      notifyError(err, '删除配置失败')
     } finally {
       setDeleting(false)
     }
@@ -245,7 +245,7 @@ export function ProfilesView({
               Cancel
             </Button>
             <Button disabled={deleting} onClick={() => void handleConfirmDelete()} variant="destructive">
-              {deleting ? 'Deleting...' : 'Delete'}
+              {deleting ? '删除中…' : '删除'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -294,9 +294,9 @@ function ProfileDetail({
     try {
       const { command } = await getProfileSetupCommand(profile.name)
       await navigator.clipboard.writeText(command)
-      notify({ kind: 'success', title: 'Setup command copied', message: command })
+      notify({ kind: 'success', title: '设置命令已复制', message: command })
     } catch (err) {
-      notifyError(err, 'Failed to copy setup command')
+      notifyError(err, '复制设置命令失败')
     } finally {
       setCopying(false)
     }
@@ -335,7 +335,7 @@ function ProfileDetail({
                 )}
                 <Button disabled={copying} onClick={() => void handleCopySetup()} size="sm" variant="outline">
                   <Terminal />
-                  {copying ? 'Copying...' : 'Copy setup'}
+                  {copying ? '复制中…' : '复制设置命令'}
                 </Button>
                 {!profile.is_default && (
                   <Button
@@ -417,7 +417,7 @@ function SoulEditor({ profileName }: { profileName: string }) {
         }
       } catch (err) {
         if (requestRef.current === profileName) {
-          setError(err instanceof Error ? err.message : 'Failed to load SOUL.md')
+          setError(err instanceof Error ? err.message : '加载 SOUL.md 失败')
         }
       } finally {
         if (requestRef.current === profileName) {
@@ -437,9 +437,9 @@ function SoulEditor({ profileName }: { profileName: string }) {
     try {
       await updateProfileSoul(profileName, content)
       setOriginal(content)
-      notify({ kind: 'success', title: 'SOUL.md saved', message: profileName })
+      notify({ kind: 'success', title: 'SOUL.md 已保存', message: profileName })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save SOUL.md')
+      setError(err instanceof Error ? err.message : '保存 SOUL.md 失败')
     } finally {
       setSaving(false)
     }
@@ -465,7 +465,7 @@ function SoulEditor({ profileName }: { profileName: string }) {
         <Textarea
           className="min-h-72 font-mono text-xs leading-5"
           onChange={event => setContent(event.target.value)}
-          placeholder={isEmpty ? 'Empty SOUL.md — start writing the persona...' : undefined}
+          placeholder={isEmpty ? '空的 SOUL.md — 开始编写人格设定…' : undefined}
           value={content}
         />
       )}
@@ -480,7 +480,7 @@ function SoulEditor({ profileName }: { profileName: string }) {
       <div className="flex justify-end">
         <Button disabled={!dirty || saving || loading} onClick={() => void handleSave()} size="sm">
           <Save />
-          {saving ? 'Saving...' : 'Save SOUL.md'}
+          {saving ? '保存中…' : '保存 SOUL.md'}
         </Button>
       </div>
     </section>
@@ -519,7 +519,7 @@ function CreateProfileDialog({
     event.preventDefault()
 
     if (!trimmed || invalid) {
-      setError(invalid ? `Invalid name. ${PROFILE_NAME_HINT}` : 'Name is required.')
+      setError(invalid ? `Invalid name. ${PROFILE_NAME_HINT}` : '名称为必填项。')
 
       return
     }
@@ -531,7 +531,7 @@ function CreateProfileDialog({
       await onCreate(trimmed, cloneFromDefault)
       onClose()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create profile')
+      setError(err instanceof Error ? err.message : '创建配置失败')
     } finally {
       setSaving(false)
     }
@@ -592,7 +592,7 @@ function CreateProfileDialog({
               Cancel
             </Button>
             <Button disabled={saving || !trimmed || invalid} type="submit">
-              {saving ? 'Creating...' : 'Create profile'}
+              {saving ? '创建中…' : '创建配置'}
             </Button>
           </DialogFooter>
         </form>
@@ -640,7 +640,7 @@ function RenameProfileDialog({
     }
 
     if (!trimmed || invalid) {
-      setError(invalid ? `Invalid name. ${PROFILE_NAME_HINT}` : 'Name is required.')
+      setError(invalid ? `Invalid name. ${PROFILE_NAME_HINT}` : '名称为必填项。')
 
       return
     }
@@ -651,7 +651,7 @@ function RenameProfileDialog({
     try {
       await onRename(trimmed)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to rename profile')
+      setError(err instanceof Error ? err.message : '重命名配置失败')
     } finally {
       setSaving(false)
     }
@@ -697,7 +697,7 @@ function RenameProfileDialog({
               Cancel
             </Button>
             <Button disabled={saving || invalid || unchanged} type="submit">
-              {saving ? 'Renaming...' : 'Rename'}
+              {saving ? '重命名中…' : '重命名'}
             </Button>
           </DialogFooter>
         </form>

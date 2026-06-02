@@ -72,7 +72,7 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
         const first = Object.keys(getServers(next)).sort()[0] ?? null
         setSelected(first)
       })
-      .catch(err => notifyError(err, 'MCP config failed to load'))
+      .catch(err => notifyError(err, 'MCP 配置加载失败'))
 
     return () => void (cancelled = true)
   }, [])
@@ -100,7 +100,7 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
     const nextName = name.trim()
 
     if (!nextName) {
-      notify({ kind: 'error', title: 'Name required', message: 'Give this MCP server a config key.' })
+      notify({ kind: '错误', title: '名称必填', message: '为此 MCP 服务器提供配置键。' })
 
       return
     }
@@ -111,12 +111,12 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
       const raw = JSON.parse(body)
 
       if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-        throw new Error('Server config must be a JSON object')
+        throw new Error('服务器配置必须是 JSON 对象')
       }
 
       parsed = raw as Record<string, unknown>
     } catch (err) {
-      notifyError(err, 'Invalid MCP JSON')
+      notifyError(err, '无效的 MCP JSON')
 
       return
     }
@@ -137,9 +137,9 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
       setConfig(nextConfig)
       setSelected(nextName)
       onConfigSaved?.()
-      notify({ kind: 'success', title: 'MCP server saved', message: `${nextName} applies after MCP reload.` })
+      notify({ kind: 'success', title: 'MCP 服务器已保存', message: `${nextName} applies after MCP reload.` })
     } catch (err) {
-      notifyError(err, 'Save failed')
+      notifyError(err, '保存失败')
     } finally {
       setSaving(false)
     }
@@ -158,7 +158,7 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
       setSelected(Object.keys(nextServers).sort()[0] ?? null)
       onConfigSaved?.()
     } catch (err) {
-      notifyError(err, 'Remove failed')
+      notifyError(err, '移除失败')
     } finally {
       setSaving(false)
     }
@@ -166,7 +166,7 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
 
   const reloadMcp = async () => {
     if (!gateway) {
-      notify({ kind: 'warning', title: 'Gateway unavailable', message: 'Reconnect the gateway before reloading MCP.' })
+      notify({ kind: 'warning', title: '网关不可用', message: '重新加载 MCP 前请先重新连接网关。' })
 
       return
     }
@@ -178,9 +178,9 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
         confirm: true,
         session_id: activeSessionId ?? undefined
       })
-      notify({ kind: 'success', title: 'MCP tools reloaded', message: 'New tool schemas apply to fresh turns.' })
+      notify({ kind: 'success', title: 'MCP 工具已重新加载', message: '新工具架构将在新一轮对话中生效。' })
     } catch (err) {
-      notifyError(err, 'MCP reload failed')
+      notifyError(err, 'MCP 重新加载失败')
     } finally {
       setReloading(false)
     }
@@ -193,7 +193,7 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
         <div className="flex items-center gap-2">
           <OverlayActionButton onClick={() => setSelected(null)}>New server</OverlayActionButton>
           <OverlayActionButton disabled={reloading} onClick={() => void reloadMcp()}>
-            {reloading ? 'Reloading...' : 'Reload MCP'}
+            {reloading ? '加载中…' : '重新加载 MCP'}
           </OverlayActionButton>
         </div>
       </div>
@@ -232,7 +232,7 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
         <OverlayCard className="grid gap-3 p-4">
           <div className="flex items-center gap-2 text-sm font-medium">
             <Wrench className="size-4 text-muted-foreground" />
-            {selected ? 'Edit server' : 'New server'}
+            {selected ? '编辑服务器' : '新建服务器'}
           </div>
           <label className="grid gap-1.5">
             <span className="text-xs text-muted-foreground">Name</span>
@@ -256,7 +256,7 @@ export function McpSettings({ gateway, onConfigSaved, query }: McpSettingsProps)
               <span />
             )}
             <OverlayActionButton disabled={saving} onClick={() => void saveServer()}>
-              {saving ? 'Saving...' : 'Save server'}
+              {saving ? '保存中…' : '保存服务器'}
             </OverlayActionButton>
           </div>
         </OverlayCard>

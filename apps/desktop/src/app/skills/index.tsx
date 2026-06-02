@@ -82,7 +82,7 @@ export function SkillsView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...p
       setSkills(nextSkills)
       setToolsets(nextToolsets)
     } catch (err) {
-      notifyError(err, 'Skills failed to load')
+      notifyError(err, '技能加载失败')
     } finally {
       setRefreshing(false)
     }
@@ -138,7 +138,7 @@ export function SkillsView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...p
       setSkills(current => current?.map(row => (row.name === skill.name ? { ...row, enabled } : row)) ?? current)
       notify({
         kind: 'success',
-        title: enabled ? 'Skill enabled' : 'Skill disabled',
+        title: enabled ? '技能已启用' : '技能已禁用',
         message: `${skill.name} applies to new sessions.`
       })
     } catch (err) {
@@ -180,7 +180,7 @@ export function SkillsView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...p
         </>
       }
       onSearchChange={setQuery}
-      searchPlaceholder={mode === 'skills' ? 'Search skills...' : 'Search toolsets...'}
+      searchPlaceholder={mode === 'skills' ? '搜索技能…' : '搜索工具集…'}
       searchTrailingAction={
         <Button
           aria-label={refreshing ? 'Refreshing skills' : 'Refresh skills'}
@@ -219,7 +219,7 @@ export function SkillsView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...p
                         <div className="min-w-0">
                           <div className="truncate text-sm font-medium">{skill.name}</div>
                           <p className="mt-0.5 text-xs text-muted-foreground">
-                            {asText(skill.description) || 'No description.'}
+                            {asText(skill.description) || '暂无描述。'}
                           </p>
                         </div>
                         <Switch
@@ -254,14 +254,14 @@ export function SkillsView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...p
                       <div className="flex items-center justify-between gap-2">
                         <div className="truncate text-sm font-medium">{label}</div>
                         <div className="flex items-center gap-1.5">
-                          <StatusPill active={toolset.enabled}>{toolset.enabled ? 'Enabled' : 'Disabled'}</StatusPill>
+                          <StatusPill active={toolset.enabled}>{toolset.enabled ? '已启用' : '已禁用'}</StatusPill>
                           <StatusPill active={toolset.configured}>
-                            {toolset.configured ? 'Configured' : 'Needs keys'}
+                            {toolset.configured ? '已配置' : '需要密钥'}
                           </StatusPill>
                         </div>
                       </div>
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {asText(toolset.description) || 'No description.'}
+                        {asText(toolset.description) || '暂无描述。'}
                       </p>
                       {tools.length > 0 && (
                         <div className="mt-2 flex flex-wrap gap-1">

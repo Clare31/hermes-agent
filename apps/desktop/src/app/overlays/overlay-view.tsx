@@ -17,7 +17,7 @@ interface OverlayViewProps {
 export function OverlayView({
   children,
   onClose,
-  closeLabel = 'Close',
+  closeLabel = '关闭',
   contentClassName,
   headerContent,
   rootClassName

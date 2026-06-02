@@ -94,7 +94,7 @@ export function GatewaySettings() {
 
         setState(config)
       })
-      .catch(err => notifyError(err, 'Gateway settings failed to load'))
+      .catch(err => notifyError(err, '网关设置加载失败'))
       .finally(() => {
         if (!cancelled) {
           setLoading(false)
@@ -119,8 +119,8 @@ export function GatewaySettings() {
     if (state.mode === 'remote' && !canUseRemote) {
       notify({
         kind: 'warning',
-        title: 'Remote gateway incomplete',
-        message: 'Enter a remote URL and session token before switching to remote.'
+        title: '远程网关信息不完整',
+        message: '切换到远程前请输入远程地址和会话令牌。'
       })
 
       return
@@ -151,8 +151,8 @@ export function GatewaySettings() {
     if (!canUseRemote) {
       notify({
         kind: 'warning',
-        title: 'Remote gateway incomplete',
-        message: 'Enter a remote URL and session token before testing.'
+        title: '远程网关信息不完整',
+        message: '测试前请输入远程地址和会话令牌。'
       })
 
       return
@@ -170,7 +170,7 @@ export function GatewaySettings() {
 
       const message = `Connected to ${result.baseUrl}${result.version ? ` · Hermes ${result.version}` : ''}`
       setLastTest(message)
-      notify({ kind: 'success', title: 'Remote gateway reachable', message })
+      notify({ kind: 'success', title: '远程网关可访问', message })
     } catch (err) {
       notifyError(err, 'Remote gateway test failed')
     } finally {

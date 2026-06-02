@@ -14,7 +14,7 @@ const consoleLevelLabel: Record<number, string> = {
   0: 'log',
   1: 'info',
   2: 'warn',
-  3: 'error'
+  3: '错误'
 }
 
 const consoleLevelClass: Record<number, string> = {
@@ -86,7 +86,7 @@ function ConsoleRow({ copyText, log, onSend, onToggleSelect, selected }: Console
           consoleLevelClass[log.level] ?? consoleLevelClass[0]
         )}
         onClick={onToggleSelect}
-        title={selected ? 'Deselect entry' : 'Select entry'}
+        title={selected ? '取消选中条目' : '选中条目'}
         type="button"
       >
         {consoleLevelLabel[log.level] || 'log'}
@@ -185,13 +185,13 @@ export function PreviewConsolePanel({
       return
     }
 
-    const block = ['Preview console:', '```', ...entries.map(formatLogLine), '```'].join('\n')
+    const block = ['预览控制台：', '```', ...entries.map(formatLogLine), '```'].join('\n')
 
     requestComposerInsert(block, { mode: 'block', target: 'main' })
     consoleState.clearSelection()
     notify({
       kind: 'success',
-      title: 'Sent to chat',
+      title: '已发送到对话',
       message: `${entries.length} log entr${entries.length === 1 ? 'y' : 'ies'} added to composer`
     })
   }
@@ -228,7 +228,7 @@ export function PreviewConsolePanel({
             title={
               visibleSelection.length > 0
                 ? `Send ${visibleSelection.length} selected to chat`
-                : 'Send all log entries to chat'
+                : '发送所有日志到对话'
             }
             type="button"
           >
@@ -241,7 +241,7 @@ export function PreviewConsolePanel({
             disabled={sendableLogs.length === 0}
             errorMessage="Could not copy console output"
             iconClassName="size-3"
-            label={visibleSelection.length > 0 ? 'Copy selected to clipboard' : 'Copy all to clipboard'}
+            label={visibleSelection.length > 0 ? '复制选中到剪贴板' : '复制全部到剪贴板'}
             text={() => formatConsoleEntries(sendableLogs)}
           >
             Copy

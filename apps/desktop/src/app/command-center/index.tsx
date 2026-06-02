@@ -61,15 +61,15 @@ interface AuxTaskMeta {
 }
 
 const AUX_TASKS: readonly AuxTaskMeta[] = [
-  { key: 'vision', label: 'Vision', hint: 'Image analysis' },
-  { key: 'web_extract', label: 'Web extract', hint: 'Page summarization' },
-  { key: 'compression', label: 'Compression', hint: 'Context compaction' },
-  { key: 'session_search', label: 'Session search', hint: 'Recall queries' },
-  { key: 'skills_hub', label: 'Skills hub', hint: 'Skill search' },
-  { key: 'approval', label: 'Approval', hint: 'Smart auto-approve' },
-  { key: 'mcp', label: 'MCP', hint: 'MCP tool routing' },
-  { key: 'title_generation', label: 'Title gen', hint: 'Session titles' },
-  { key: 'curator', label: 'Curator', hint: 'Skill-usage review' }
+  { key: 'vision', label: '视觉', hint: '图像分析' },
+  { key: 'web_extract', label: '网页提取', hint: '页面摘要' },
+  { key: 'compression', label: '压缩', hint: '上下文压缩' },
+  { key: 'session_search', label: '会话搜索', hint: '召回查询' },
+  { key: 'skills_hub', label: '技能中心', hint: '技能搜索' },
+  { key: 'approval', label: '审批', hint: '智能自动审批' },
+  { key: 'mcp', label: 'MCP', hint: 'MCP 工具路由' },
+  { key: 'title_generation', label: '标题生成', hint: '会话标题' },
+  { key: 'curator', label: '策展', hint: '技能使用审查' }
 ]
 
 const USAGE_PERIODS = [7, 30, 90] as const
@@ -85,16 +85,16 @@ interface CommandCenterViewProps {
 }
 
 const SECTION_LABELS: Record<CommandCenterSection, string> = {
-  sessions: 'Sessions',
-  system: 'System',
-  models: 'Models',
-  usage: 'Usage'
+  sessions: '会话',
+  system: '系统',
+  models: '模型',
+  usage: '用量'
 }
 
 const SECTION_DESCRIPTIONS: Record<CommandCenterSection, string> = {
-  sessions: 'Search and manage sessions',
-  system: 'Status, logs, and system actions',
-  models: 'Global and auxiliary model controls',
+  sessions: '搜索和管理会话',
+  system: '状态、日志和系统操作',
+  models: '全局和辅助模型控制',
   usage: 'Token, cost, and skill activity over time'
 }
 
@@ -113,23 +113,23 @@ interface SectionSearchEntry {
 }
 
 const NAVIGATION_SEARCH_ENTRIES: readonly NavigationSearchEntry[] = [
-  { id: 'nav-new-chat', route: NEW_CHAT_ROUTE, title: 'New session', detail: 'Start a fresh session' },
-  { id: 'nav-settings', route: SETTINGS_ROUTE, title: 'Settings', detail: 'Configure Hermes desktop' },
-  { id: 'nav-skills', route: SKILLS_ROUTE, title: 'Skills', detail: 'Enable and inspect skills' },
+  { id: 'nav-new-chat', route: NEW_CHAT_ROUTE, title: '新建会话', detail: '开始新会话' },
+  { id: 'nav-settings', route: SETTINGS_ROUTE, title: '设置', detail: '配置 Hermes 桌面版' },
+  { id: 'nav-skills', route: SKILLS_ROUTE, title: '技能', detail: '启用和检查技能' },
   {
     id: 'nav-messaging',
     route: MESSAGING_ROUTE,
-    title: 'Messaging',
-    detail: 'Set up Telegram, Slack, Discord, and more'
+    title: '消息',
+    detail: '设置 Telegram、Slack、Discord 等'
   },
-  { id: 'nav-artifacts', route: ARTIFACTS_ROUTE, title: 'Artifacts', detail: 'Browse generated outputs' }
+  { id: 'nav-artifacts', route: ARTIFACTS_ROUTE, title: '产物', detail: '浏览生成的输出' }
 ]
 
 const SECTION_SEARCH_ENTRIES: readonly SectionSearchEntry[] = [
-  { id: 'section-sessions', section: 'sessions', title: 'Sessions panel', detail: 'Search, pin, and manage sessions' },
-  { id: 'section-system', section: 'system', title: 'System panel', detail: 'Gateway status, logs, restart/update' },
-  { id: 'section-models', section: 'models', title: 'Models panel', detail: 'Main and auxiliary model assignments' },
-  { id: 'section-usage', section: 'usage', title: 'Usage panel', detail: 'Token, cost, and skill activity' }
+  { id: 'section-sessions', section: 'sessions', title: '会话面板', detail: '搜索、固定和管理会话' },
+  { id: 'section-system', section: 'system', title: '系统面板', detail: '网关状态、日志、重启/更新' },
+  { id: 'section-models', section: 'models', title: '模型面板', detail: '主模型和辅助模型分配' },
+  { id: 'section-usage', section: 'usage', title: '用量面板', detail: 'Token、费用和技能活动' }
 ]
 
 interface SessionSearchHit {
@@ -274,7 +274,7 @@ export function CommandCenterView({
     () => [
       {
         id: 'navigation',
-        label: 'Navigate',
+        label: '导航',
         search: async searchQuery => {
           const routeHits: RouteSearchHit[] = NAVIGATION_SEARCH_ENTRIES.filter(entry =>
             matchesSearchQuery(searchQuery, entry.title, entry.detail, entry.route)
@@ -299,7 +299,7 @@ export function CommandCenterView({
       },
       {
         id: 'sessions',
-        label: 'Sessions',
+        label: '会话',
         search: async searchQuery => {
           const response = await searchSessions(searchQuery)
 
@@ -479,7 +479,7 @@ export function CommandCenterView({
         if (!nextStatus) {
           const pendingStatus = {
             exit_code: null,
-            lines: ['Action started, waiting for status...'],
+            lines: ['操作已启动，等待状态…'],
             name: started.name,
             pid: started.pid,
             running: true
@@ -675,19 +675,19 @@ export function CommandCenterView({
             {section === 'system' && (
               <OverlayActionButton disabled={systemLoading} onClick={() => void refreshSystem()}>
                 <IconRefresh className={cn('mr-1.5 size-3.5', systemLoading && 'animate-spin')} />
-                {systemLoading ? 'Refreshing...' : 'Refresh'}
+                {systemLoading ? '刷新中…' : '刷新'}
               </OverlayActionButton>
             )}
             {section === 'usage' && (
               <OverlayActionButton disabled={usageLoading} onClick={() => void refreshUsage(usagePeriod)}>
                 <IconRefresh className={cn('mr-1.5 size-3.5', usageLoading && 'animate-spin')} />
-                {usageLoading ? 'Refreshing...' : 'Refresh'}
+                {usageLoading ? '刷新中…' : '刷新'}
               </OverlayActionButton>
             )}
             {section === 'models' && (
               <OverlayActionButton disabled={modelsLoading} onClick={() => void refreshModels()}>
                 <IconRefresh className={cn('mr-1.5 size-3.5', modelsLoading && 'animate-spin')} />
-                {modelsLoading ? 'Refreshing...' : 'Refresh'}
+                {modelsLoading ? '刷新中…' : '刷新'}
               </OverlayActionButton>
             )}
           </header>
@@ -733,7 +733,7 @@ export function CommandCenterView({
                                     event.stopPropagation()
                                     pinned ? unpinSession(result.sessionId) : pinSession(result.sessionId)
                                   }}
-                                  title={pinned ? 'Unpin session' : 'Pin session'}
+                                  title={pinned ? '取消固定会话' : '固定会话'}
                                 >
                                   {pinned ? (
                                     <IconBookmarkFilled className="size-3.5" />
@@ -812,7 +812,7 @@ export function CommandCenterView({
                         </button>
                         <OverlayIconButton
                           onClick={() => (pinned ? unpinSession(session.id) : pinSession(session.id))}
-                          title={pinned ? 'Unpin session' : 'Pin session'}
+                          title={pinned ? '取消固定会话' : '固定会话'}
                         >
                           {pinned ? <IconBookmarkFilled className="size-3.5" /> : <IconBookmark className="size-3.5" />}
                         </OverlayIconButton>
@@ -859,7 +859,7 @@ export function CommandCenterView({
                             )}
                           />
                           <span className="font-medium text-foreground">
-                            {status.gateway_running ? 'Messaging gateway running' : 'Messaging gateway stopped'}
+                            {status.gateway_running ? '消息网关运行中' : '消息网关已停止'}
                           </span>
                         </div>
                         <div className="mt-1 text-xs text-muted-foreground">
@@ -898,7 +898,7 @@ export function CommandCenterView({
                   )}
                 </div>
                 <pre className="h-full min-h-0 overflow-auto whitespace-pre-wrap wrap-break-word font-mono text-[0.65rem] leading-relaxed text-muted-foreground">
-                  {logs.length ? logs.join('\n') : 'No logs loaded yet.'}
+                  {logs.length ? logs.join('\n') : '暂无日志。'}
                 </pre>
               </OverlayCard>
             </div>
@@ -938,7 +938,7 @@ export function CommandCenterView({
                   >
                     {(selectedProviderModels.length ? selectedProviderModels : ['']).map(model => (
                       <option key={model || 'none'} value={model}>
-                        {model || 'No models available'}
+                        {model || '无可用的模型'}
                       </option>
                     ))}
                   </select>
@@ -951,7 +951,7 @@ export function CommandCenterView({
                     ) : (
                       <IconSparkles className="mr-1.5 size-3.5" />
                     )}
-                    {applyingModel ? 'Applying...' : 'Apply'}
+                    {applyingModel ? '应用中…' : '应用'}
                   </OverlayActionButton>
                 </div>
                 {modelsError && <div className="mt-2 text-xs text-destructive">{modelsError}</div>}
@@ -984,8 +984,8 @@ export function CommandCenterView({
                             </div>
                             <div className="truncate font-mono text-[0.62rem] text-muted-foreground">
                               {isAuto
-                                ? 'auto · use main model'
-                                : `${current.provider} · ${current.model || '(provider default)'}`}
+                                ? '自动 · 使用主模型'
+                                : `${current.provider} · ${current.model || '（提供商默认）'}`}
                             </div>
                           </div>
                           {!isEditing && (
@@ -1029,7 +1029,7 @@ export function CommandCenterView({
                             >
                               {(auxDraftProviderModels.length ? auxDraftProviderModels : ['']).map(model => (
                                 <option key={model || 'none'} value={model}>
-                                  {model || 'No models available'}
+                                  {model || '无可用的模型'}
                                 </option>
                               ))}
                             </select>
@@ -1037,7 +1037,7 @@ export function CommandCenterView({
                               disabled={!auxDraft.provider || !auxDraft.model || applyingModel}
                               onClick={() => void applyAuxiliaryDraft(meta.key)}
                             >
-                              {applyingModel ? 'Applying...' : 'Apply'}
+                              {applyingModel ? '应用中…' : '应用'}
                             </OverlayActionButton>
                             <OverlayActionButton onClick={() => setEditingAuxTask(null)} tone="subtle">
                               Cancel

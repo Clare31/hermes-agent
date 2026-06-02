@@ -47,7 +47,7 @@ function tabLabelFor(target: PreviewTarget): string {
   const value = target.label || target.path || target.source || target.url
   const tail = value.split(/[\\/]/).filter(Boolean).at(-1)
 
-  return tail || value || 'Preview'
+  return tail || value || '预览'
 }
 
 export function ChatPreviewRail({ onRestartServer, setTitlebarToolGroup }: ChatPreviewRailProps) {
@@ -58,7 +58,7 @@ export function ChatPreviewRail({ onRestartServer, setTitlebarToolGroup }: ChatP
 
   const tabs = useMemo<readonly RailTab[]>(
     () => [
-      ...(previewTarget ? [{ id: RIGHT_RAIL_PREVIEW_TAB_ID, label: 'Preview', target: previewTarget } as RailTab] : []),
+      ...(previewTarget ? [{ id: RIGHT_RAIL_PREVIEW_TAB_ID, label: '预览', target: previewTarget } as RailTab] : []),
       ...filePreviewTabs.map(({ id, target }) => ({ id, label: tabLabelFor(target), target }) as RailTab)
     ],
     [filePreviewTabs, previewTarget]

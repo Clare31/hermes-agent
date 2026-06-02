@@ -50,7 +50,7 @@ function EnvVarField({ envVar, isSet, onSaved, onCleared }: EnvVarFieldProps) {
       setEditing(false)
       setValue('')
       onSaved(envVar.key)
-      notify({ kind: 'success', title: 'Credential saved', message: `${envVar.key} updated.` })
+      notify({ kind: 'success', title: '凭据已保存', message: `${envVar.key} updated.` })
     } catch (err) {
       notifyError(err, `Failed to save ${envVar.key}`)
     } finally {
@@ -69,7 +69,7 @@ function EnvVarField({ envVar, isSet, onSaved, onCleared }: EnvVarFieldProps) {
       await deleteEnvVar(envVar.key)
       setRevealed(null)
       onCleared(envVar.key)
-      notify({ kind: 'success', title: 'Credential removed', message: `${envVar.key} removed.` })
+      notify({ kind: 'success', title: '凭据已移除', message: `${envVar.key} removed.` })
     } catch (err) {
       notifyError(err, `Failed to remove ${envVar.key}`)
     } finally {
@@ -100,7 +100,7 @@ function EnvVarField({ envVar, isSet, onSaved, onCleared }: EnvVarFieldProps) {
             <span className="font-mono text-xs font-medium">{envVar.key}</span>
             <Pill tone={isSet ? 'primary' : 'muted'}>
               {isSet && <Check className="size-3" />}
-              {isSet ? 'Set' : 'Not set'}
+              {isSet ? '设置' : '未设置'}
             </Pill>
           </div>
           {envVar.prompt && envVar.prompt !== envVar.key && (
@@ -122,7 +122,7 @@ function EnvVarField({ envVar, isSet, onSaved, onCleared }: EnvVarFieldProps) {
             </Button>
           )}
           <Button onClick={() => setEditing(e => !e)} size="xs" variant="outline">
-            {isSet ? 'Replace' : 'Set'}
+            {isSet ? '替换' : '设置'}
           </Button>
           {isSet && (
             <Button disabled={busy} onClick={() => void handleClear()} size="icon-xs" title="Clear value" variant="ghost">
@@ -183,7 +183,7 @@ export function ToolsetConfigPanel({ toolset, onConfiguredChange }: ToolsetConfi
 
       setEnvState(seeded)
     } catch (err) {
-      notifyError(err, 'Tool configuration failed to load')
+      notifyError(err, '工具配置加载失败')
     } finally {
       setLoading(false)
     }
@@ -212,7 +212,7 @@ export function ToolsetConfigPanel({ toolset, onConfiguredChange }: ToolsetConfi
 
     try {
       await selectToolsetProvider(toolset, provider.name)
-      notify({ kind: 'success', title: 'Provider selected', message: `${provider.name} is now active.` })
+      notify({ kind: 'success', title: '提供商已选择', message: `${provider.name} is now active.` })
       onConfiguredChange?.()
     } catch (err) {
       notifyError(err, `Failed to select ${provider.name}`)

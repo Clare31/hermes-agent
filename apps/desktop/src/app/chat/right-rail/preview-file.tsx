@@ -503,7 +503,7 @@ export function LocalFilePreview({ reloadKey, target }: { reloadKey: number; tar
             ? `Previewing ${target.label} may show unreadable text.`
             : `${target.label} is ${formatBytes(size)}. Hermes will only show the first 512 KB.`
         }
-        primaryAction={{ label: 'Preview anyway', onClick: () => setForcePreview(true) }}
+        primaryAction={{ label: '仍要预览', onClick: () => setForcePreview(true) }}
         title={binary ? 'This looks like a binary file' : 'This file is large'}
         tone="warning"
       />

@@ -53,7 +53,7 @@ function ConfigField({
   if (schema.type === 'boolean') {
     return row(
       <div className="flex items-center justify-end gap-3">
-        <span className="text-xs text-muted-foreground">{value ? 'On' : 'Off'}</span>
+        <span className="text-xs text-muted-foreground">{value ? '开' : '关'}</span>
         <Switch checked={Boolean(value)} onCheckedChange={onChange} />
       </div>
     )
@@ -76,7 +76,7 @@ function ConfigField({
               {option
                 ? (optionLabels?.[option] ?? prettyName(option))
                 : schemaKey === 'display.personality'
-                  ? 'None'
+                  ? '无'
                   : '(none)'}
             </SelectItem>
           ))}
@@ -193,7 +193,7 @@ export function ConfigSettings({
         setDefaults(d)
         setSchema(s.fields)
       })
-      .catch(err => notifyError(err, 'Settings failed to load'))
+      .catch(err => notifyError(err, '设置加载失败'))
 
     return () => void (cancelled = true)
   }, [])
@@ -237,7 +237,7 @@ export function ConfigSettings({
           }
         } catch (err) {
           if (saveVersionRef.current === v) {
-            notifyError(err, 'Autosave failed')
+            notifyError(err, '自动保存失败')
           }
         }
       })()
@@ -306,9 +306,9 @@ export function ConfigSettings({
     reader.onload = () => {
       try {
         updateConfig(JSON.parse(String(reader.result)))
-        notify({ kind: 'success', title: 'Config imported', message: 'Saving…' })
+        notify({ kind: 'success', title: '配置已导入', message: '保存中…' })
       } catch (err) {
-        notifyError(err, 'Invalid config JSON')
+        notifyError(err, '无效的配置 JSON')
       }
     }
 

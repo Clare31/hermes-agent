@@ -35,7 +35,7 @@ import type { SetStatusbarItemGroup } from '../shell/statusbar-controls'
 const DEFAULT_DELIVER = 'local'
 
 const DELIVERY_OPTIONS: ReadonlyArray<{ label: string; value: string }> = [
-  { label: 'This desktop', value: 'local' },
+  { label: '本机桌面', value: 'local' },
   { label: 'Telegram', value: 'telegram' },
   { label: 'Discord', value: 'discord' },
   { label: 'Slack', value: 'slack' },
@@ -46,42 +46,42 @@ const SCHEDULE_OPTIONS: ReadonlyArray<ScheduleOption> = [
   {
     expr: '0 9 * * *',
     hint: 'Every day at 9:00 AM',
-    label: 'Daily',
+    label: '每天',
     value: 'daily'
   },
   {
     expr: '0 9 * * 1-5',
     hint: 'Monday through Friday at 9:00 AM',
-    label: 'Weekdays',
+    label: '工作日',
     value: 'weekdays'
   },
   {
     expr: '0 9 * * 1',
-    hint: 'Every Monday at 9:00 AM',
-    label: 'Weekly',
+    hint: '每周一早上 9:00',
+    label: '每周',
     value: 'weekly'
   },
   {
     expr: '0 9 1 * *',
-    hint: 'The first day of each month at 9:00 AM',
-    label: 'Monthly',
+    hint: '每月第一天早上 9:00',
+    label: '每月',
     value: 'monthly'
   },
   {
     expr: '0 * * * *',
-    hint: 'At the top of every hour',
-    label: 'Hourly',
+    hint: '每小时整点',
+    label: '每小时',
     value: 'hourly'
   },
   {
     expr: '*/15 * * * *',
-    hint: 'Every 15 minutes',
-    label: 'Every 15 minutes',
+    hint: '每 15 分钟',
+    label: '每 15 分钟',
     value: 'every-15-minutes'
   },
   {
-    hint: 'Cron syntax or natural language',
-    label: 'Custom',
+    hint: 'Cron 表达式或自然语言',
+    label: '自定义',
     value: 'custom'
   }
 ]
@@ -134,7 +134,7 @@ function jobTitle(job: CronJob): string {
     return truncate(script, 60)
   }
 
-  return job.id || 'Cron job'
+  return job.id || '定时任务'
 }
 
 function jobScheduleDisplay(job: CronJob): string {
@@ -273,7 +273,7 @@ function scheduleSummary(option: ScheduleOption, expr: string): string {
   }
 
   if (option.value === 'hourly') {
-    return minute === '0' ? 'At the top of every hour' : `Every hour at :${minute.padStart(2, '0')}`
+    return minute === '0' ? '每小时整点' : `Every hour at :${minute.padStart(2, '0')}`
   }
 
   return option.hint
@@ -326,7 +326,7 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
       const result = await getCronJobs()
       setJobs(result)
     } catch (err) {
-      notifyError(err, 'Failed to load cron jobs')
+      notifyError(err, '加载定时任务失败')
     } finally {
       setRefreshing(false)
     }
@@ -360,7 +360,7 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
         message: truncate(jobTitle(job), 60)
       })
     } catch (err) {
-      notifyError(err, 'Failed to update cron job')
+      notifyError(err, '更新定时任务失败')
     } finally {
       setBusyJobId(null)
     }
@@ -372,9 +372,9 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
     try {
       const updated = await triggerCronJob(job.id)
       setJobs(current => (current ? current.map(row => (row.id === job.id ? updated : row)) : current))
-      notify({ kind: 'success', title: 'Cron triggered', message: truncate(jobTitle(job), 60) })
+      notify({ kind: 'success', title: '定时任务已触发', message: truncate(jobTitle(job), 60) })
     } catch (err) {
-      notifyError(err, 'Failed to trigger cron job')
+      notifyError(err, '触发定时任务失败')
     } finally {
       setBusyJobId(null)
     }
@@ -390,10 +390,10 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
     try {
       await deleteCronJob(pendingDelete.id)
       setJobs(current => (current ? current.filter(row => row.id !== pendingDelete.id) : current))
-      notify({ kind: 'success', title: 'Cron deleted', message: truncate(jobTitle(pendingDelete), 60) })
+      notify({ kind: 'success', title: '定时任务已删除', message: truncate(jobTitle(pendingDelete), 60) })
       setPendingDelete(null)
     } catch (err) {
-      notifyError(err, 'Failed to delete cron job')
+      notifyError(err, '删除定时任务失败')
     } finally {
       setDeleting(false)
     }
@@ -409,7 +409,7 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
       })
 
       setJobs(current => (current ? [...current, created] : [created]))
-      notify({ kind: 'success', title: 'Cron created', message: truncate(jobTitle(created), 60) })
+      notify({ kind: 'success', title: '定时任务已创建', message: truncate(jobTitle(created), 60) })
     } else if (editor.mode === 'edit') {
       const updated = await updateCronJob(editor.job.id, {
         prompt: values.prompt,
@@ -419,7 +419,7 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
       })
 
       setJobs(current => (current ? current.map(row => (row.id === updated.id ? updated : row)) : current))
-      notify({ kind: 'success', title: 'Cron updated', message: truncate(jobTitle(updated), 60) })
+      notify({ kind: 'success', title: '定时任务已更新', message: truncate(jobTitle(updated), 60) })
     }
 
     setEditor({ mode: 'closed' })
@@ -484,7 +484,7 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
           </div>
         </div>
       )}
-      <div className="hidden">{totalCount === 0 ? 'No scheduled jobs' : `${enabledCount}/${totalCount} active`}</div>
+      <div className="hidden">{totalCount === 0 ? '暂无定时任务' : `${enabledCount}/${totalCount} active`}</div>
 
       <CronEditorDialog editor={editor} onClose={() => setEditor({ mode: 'closed' })} onSave={handleEditorSave} />
 
@@ -507,7 +507,7 @@ export function CronView({ setStatusbarItemGroup: _setStatusbarItemGroup, ...pro
               Cancel
             </Button>
             <Button disabled={deleting} onClick={() => void handleConfirmDelete()} variant="destructive">
-              {deleting ? 'Deleting...' : 'Delete'}
+              {deleting ? '删除中…' : '删除'}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -568,10 +568,10 @@ function CronJobRow({
 
       <div className="flex shrink-0 items-center gap-0.5">
         <IconAction
-          aria-label={isPaused ? 'Resume cron' : 'Pause cron'}
+          aria-label={isPaused ? '恢复定时任务' : '暂停定时任务'}
           disabled={busy}
           onClick={onPauseResume}
-          title={isPaused ? 'Resume' : 'Pause'}
+          title={isPaused ? '恢复' : '暂停'}
         >
           {isPaused ? <Play className="size-3.5" /> : <Pause className="size-3.5" />}
         </IconAction>
@@ -703,7 +703,7 @@ function CronEditorDialog({
     const trimmedSchedule = schedule.trim()
 
     if (!trimmedPrompt || !trimmedSchedule) {
-      setError('Prompt and schedule are required.')
+      setError('提示词和调度表达式必填。')
 
       return
     }
@@ -719,7 +719,7 @@ function CronEditorDialog({
         schedule: trimmedSchedule
       })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save cron job')
+      setError(err instanceof Error ? err.message : '保存定时任务失败')
     } finally {
       setSaving(false)
     }
@@ -822,7 +822,7 @@ function CronEditorDialog({
               Cancel
             </Button>
             <Button disabled={saving} type="submit">
-              {saving ? 'Saving...' : isEdit ? 'Save changes' : 'Create cron'}
+              {saving ? '保存中…' : isEdit ? '保存更改' : '创建定时任务'}
             </Button>
           </DialogFooter>
         </form>

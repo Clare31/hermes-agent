@@ -27,8 +27,8 @@ const STAGE_LABELS: Record<DesktopUpdateStage, string> = {
   pull: 'Almost there…',
   pydeps: 'Finishing up…',
   restart: 'Restarting Hermes…',
-  manual: 'Update from your terminal',
-  error: 'Update paused'
+  manual: '从终端更新',
+  error: '更新已暂停'
 }
 
 function totalItems(groups: readonly CommitGroup[]) {
@@ -49,13 +49,13 @@ export function UpdatesOverlay() {
 
   const behind = status?.behind ?? 0
 
-  const phase: 'idle' | 'applying' | 'manual' | 'error' =
+  const phase: 'idle' | 'applying' | 'manual' | '错误' =
     apply.stage === 'manual'
       ? 'manual'
       : apply.applying || apply.stage === 'restart'
         ? 'applying'
-        : apply.stage === 'error'
-          ? 'error'
+        : apply.stage === '错误'
+          ? '错误'
           : 'idle'
 
   const handleClose = (next: boolean) => {
@@ -65,7 +65,7 @@ export function UpdatesOverlay() {
 
     setUpdateOverlayOpen(next)
 
-    if (!next && (apply.stage === 'error' || apply.stage === 'restart' || apply.stage === 'manual')) {
+    if (!next && (apply.stage === '错误' || apply.stage === 'restart' || apply.stage === 'manual')) {
       resetUpdateApplyState()
     }
   }
@@ -86,7 +86,7 @@ export function UpdatesOverlay() {
           <ManualView command={apply.command ?? 'hermes update'} onDone={() => handleClose(false)} />
         )}
 
-        {phase === 'error' && (
+        {phase === '错误' && (
           <ErrorView message={apply.message} onDismiss={() => handleClose(false)} onRetry={handleInstall} />
         )}
 
@@ -302,7 +302,7 @@ function ManualView({ command, onDone }: { command: string; onDone: () => void }
 }
 
 function ApplyingView({ apply }: { apply: UpdateApplyState }) {
-  const label = STAGE_LABELS[apply.stage] ?? 'Updating Hermes…'
+  const label = STAGE_LABELS[apply.stage] ?? '正在更新 Hermes…'
 
   const percent =
     typeof apply.percent === 'number' && Number.isFinite(apply.percent)
@@ -347,7 +347,7 @@ function ErrorView({ message, onDismiss, onRetry }: { message: string; onDismiss
 
         <DialogTitle className="text-center text-xl">Update didn’t finish</DialogTitle>
         <DialogDescription className="text-center text-sm">
-          {message || 'No worries — nothing was lost. You can try again now.'}
+          {message || '别担心 — 没有丢失任何内容。现在可以重试。'}
         </DialogDescription>
       </div>
 

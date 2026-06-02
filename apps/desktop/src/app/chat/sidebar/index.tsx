@@ -69,13 +69,13 @@ const VIRTUALIZE_THRESHOLD = 25
 const SIDEBAR_NAV: SidebarNavItem[] = [
   {
     id: 'new-session',
-    label: 'New session',
+    label: '新建会话',
     icon: props => <Codicon name="robot" {...props} />,
     action: 'new-session'
   },
-  { id: 'skills', label: 'Skills', icon: props => <Codicon name="symbol-misc" {...props} />, route: SKILLS_ROUTE },
-  { id: 'messaging', label: 'Messaging', icon: props => <Codicon name="comment" {...props} />, route: MESSAGING_ROUTE },
-  { id: 'artifacts', label: 'Artifacts', icon: props => <Codicon name="files" {...props} />, route: ARTIFACTS_ROUTE }
+  { id: 'skills', label: '技能', icon: props => <Codicon name="symbol-misc" {...props} />, route: SKILLS_ROUTE },
+  { id: 'messaging', label: '消息', icon: props => <Codicon name="comment" {...props} />, route: MESSAGING_ROUTE },
+  { id: 'artifacts', label: '产物', icon: props => <Codicon name="files" {...props} />, route: ARTIFACTS_ROUTE }
 ]
 
 const WORKSPACE_PAGE = 5
@@ -126,7 +126,7 @@ function workspaceGroupsFor(sessions: SessionInfo[]): SidebarSessionGroup[] {
   for (const session of sessions) {
     const path = session.cwd?.trim() || ''
     const id = path || '__no_workspace__'
-    const label = baseName(path) || path || 'No workspace'
+    const label = baseName(path) || path || '无工作区'
 
     const group = groups.get(id) ?? { id, label, path: path || null, sessions: [] }
     group.sessions.push(session)
@@ -371,7 +371,7 @@ export function ChatSidebar({
             groups={agentsGrouped ? agentGroups : undefined}
             headerAction={
               <Button
-                aria-label={agentsGrouped ? 'Show sessions as a single list' : 'Group sessions by workspace'}
+                aria-label={agentsGrouped ? '将会话显示为单个列表' : '按工作区分组会话'}
                 className={cn(
                   'cursor-pointer text-(--ui-text-tertiary) opacity-70 hover:bg-(--ui-control-hover-background) hover:text-foreground hover:opacity-100 focus-visible:opacity-100',
                   agentsGrouped && 'bg-(--ui-control-active-background) text-foreground opacity-100'
@@ -382,7 +382,7 @@ export function ChatSidebar({
                   setSidebarAgentsGrouped(!agentsGrouped)
                 }}
                 size="icon-xs"
-                title={agentsGrouped ? 'Ungroup sessions' : 'Group by workspace'}
+                title={agentsGrouped ? '取消分组会话' : '按工作区分组'}
                 variant="ghost"
               >
                 <Codicon name={agentsGrouped ? 'list-unordered' : 'root-folder'} size="0.75rem" />
@@ -763,7 +763,7 @@ interface SidebarLoadMoreRowProps {
 }
 
 function SidebarLoadMoreRow({ loading, onClick, step }: SidebarLoadMoreRowProps) {
-  const label = loading ? 'Loading…' : step > 0 ? `Load ${step} more` : 'Load more'
+  const label = loading ? '加载中…' : step > 0 ? `Load ${step} more` : '加载更多'
 
   return (
     <button

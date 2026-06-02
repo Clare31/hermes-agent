@@ -88,7 +88,7 @@ export function useStatusbarItems({
     const running = actions.filter(t => t.status.running).length
     const failed = actions.filter(t => !t.status.running && (t.status.exit_code ?? 0) !== 0).length
     const previewRunning = previewServerRestartStatus === 'running' ? 1 : 0
-    const previewFailed = previewServerRestartStatus === 'error' ? 1 : 0
+    const previewFailed = previewServerRestartStatus === '错误' ? 1 : 0
 
     const subagentsRunning = Object.values(subagentsBySession).reduce(
       (sum, items) => sum + activeSubagentCount(items),
@@ -115,7 +115,7 @@ export function useStatusbarItems({
         : 'checking'
     : gatewayConnecting
       ? 'connecting'
-      : 'offline'
+      : '离线'
 
   const gatewayClassName = inferenceReady
     ? undefined
@@ -138,7 +138,7 @@ export function useStatusbarItems({
       : `${base}${behindHint}`
 
     const tooltip = [
-      applying ? updateApply.message || 'Update in progress' : null,
+      applying ? updateApply.message || '更新中' : null,
       !applying && behind > 0 && `${behind} commit${behind === 1 ? '' : 's'} behind ${updateStatus?.branch ?? '…'}`,
       appVersion && `Hermes Desktop v${appVersion}`,
       sha && `commit ${sha}`,
@@ -175,7 +175,7 @@ export function useStatusbarItems({
         icon: <Command className="size-3.5" />,
         id: 'command-center',
         onSelect: toggleCommandCenter,
-        title: commandCenterOpen ? 'Close Command Center' : 'Open Command Center',
+        title: commandCenterOpen ? '关闭控制中心' : '打开控制中心',
         variant: 'action'
       },
       {
@@ -183,10 +183,10 @@ export function useStatusbarItems({
         detail: gatewayDetail,
         icon: inferenceReady ? <Activity className="size-3" /> : <AlertCircle className="size-3" />,
         id: 'gateway-health',
-        label: 'Gateway',
+        label: '网关',
         menuClassName: 'w-72',
         menuContent: gatewayMenuContent,
-        title: inferenceStatus?.reason || 'Hermes inference gateway status',
+        title: inferenceStatus?.reason || 'Hermes 推理网关状态',
         variant: 'menu'
       },
       {
@@ -211,16 +211,16 @@ export function useStatusbarItems({
             <Sparkles className="size-3" />
           ),
         id: 'agents',
-        label: 'Agents',
+        label: '代理',
         onSelect: openAgents,
-        title: agentsOpen ? 'Close agents' : 'Open agents',
+        title: agentsOpen ? '关闭代理' : '打开代理面板',
         variant: 'action'
       },
       {
         icon: <Clock className="size-3" />,
         id: 'cron',
-        label: 'Cron',
-        title: 'Open cron jobs',
+        label: '定时任务',
+        title: '打开定时任务',
         to: CRON_ROUTE,
         variant: 'action'
       }
@@ -248,8 +248,8 @@ export function useStatusbarItems({
         hidden: !busy || !turnStartedAt,
         icon: <Loader2 className="size-3 animate-spin" />,
         id: 'running-timer',
-        label: 'Running',
-        title: 'Current turn elapsed',
+        label: '运行中',
+        title: '当前已用时间',
         variant: 'text'
       },
       {
@@ -257,24 +257,24 @@ export function useStatusbarItems({
         hidden: !contextUsage,
         id: 'context-usage',
         label: contextUsage,
-        title: 'Context usage',
+        title: '上下文使用量',
         variant: 'text'
       },
       {
         detail: <LiveDuration since={sessionStartedAt} />,
         hidden: !sessionStartedAt,
         id: 'session-timer',
-        label: 'Session',
-        title: 'Runtime session elapsed',
+        label: '会话',
+        title: '会话已运行时间',
         variant: 'text'
       },
       {
         detail: currentProvider || '',
         icon: <Cpu className="size-3" />,
         id: 'model-summary',
-        label: currentModel || 'No model selected',
+        label: currentModel || '未选择模型',
         onSelect: () => setModelPickerOpen(true),
-        title: currentProvider ? `Switch model · ${currentProvider}: ${currentModel || ''}` : 'Open model picker',
+        title: currentProvider ? `Switch model · ${currentProvider}: ${currentModel || ''}` : '打开模型选择器',
         variant: 'action'
       },
       versionItem

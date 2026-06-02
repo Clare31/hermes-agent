@@ -25,7 +25,7 @@ function relativeTime(ms: number | undefined) {
   const diff = Date.now() - ms
 
   if (diff < 60_000) {
-    return 'just now'
+    return '刚刚'
   }
 
   if (diff < 3_600_000) {
@@ -57,24 +57,24 @@ export function AboutSettings() {
   }
 
   let statusLine: string
-  let statusTone: 'idle' | 'available' | 'error' = 'idle'
+  let statusTone: 'idle' | '可用' | '错误' = 'idle'
 
   if (!supported) {
     statusLine = status?.message ?? "This build can't update itself from inside the app."
-    statusTone = 'error'
+    statusTone = '错误'
   } else if (status?.error) {
     statusLine = "We couldn't reach the update server."
-    statusTone = 'error'
+    statusTone = '错误'
   } else if (applying) {
-    statusLine = 'An update is currently installing.'
-    statusTone = 'available'
+    statusLine = '当前正在安装更新。'
+    statusTone = '可用'
   } else if (behind > 0) {
     statusLine = `A new update is ready (${behind} change${behind === 1 ? '' : 's'} included).`
-    statusTone = 'available'
+    statusTone = '可用'
   } else if (status) {
     statusLine = "You're on the latest version."
   } else {
-    statusLine = 'Tap "Check now" to look for updates.'
+    statusLine = '点击「立即检查」以查找更新。'
   }
 
   return (
@@ -86,7 +86,7 @@ export function AboutSettings() {
         <div>
           <h2 className="text-lg font-semibold tracking-tight">Hermes Desktop</h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            {version?.appVersion ? `Version ${version.appVersion}` : 'Version unavailable'}
+            {version?.appVersion ? `Version ${version.appVersion}` : '版本不可用'}
           </p>
         </div>
       </div>
@@ -97,15 +97,15 @@ export function AboutSettings() {
         <div
           className={cn(
             'rounded-xl border px-4 py-3 text-sm',
-            statusTone === 'available' && 'border-primary/30 bg-primary/5 text-foreground',
-            statusTone === 'error' && 'border-destructive/35 bg-destructive/5 text-destructive',
+            statusTone === '可用' && 'border-primary/30 bg-primary/5 text-foreground',
+            statusTone === '错误' && 'border-destructive/35 bg-destructive/5 text-destructive',
             statusTone === 'idle' && 'border-border/70 bg-muted/20 text-foreground'
           )}
         >
           <div className="flex items-start gap-2">
-            {statusTone === 'available' ? (
+            {statusTone === '可用' ? (
               <Sparkles className="mt-0.5 size-4 shrink-0 text-primary" />
-            ) : statusTone === 'error' ? null : (
+            ) : statusTone === '错误' ? null : (
               <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
             )}
             <div className="min-w-0">
@@ -125,7 +125,7 @@ export function AboutSettings() {
               variant="outline"
             >
               {checking ? <Loader2 className="size-3 animate-spin" /> : <RefreshCw className="size-3" />}
-              {checking ? 'Checking…' : 'Check now'}
+              {checking ? '检查中…' : '立即检查'}
             </Button>
 
             {behind > 0 && supported && !applying && (

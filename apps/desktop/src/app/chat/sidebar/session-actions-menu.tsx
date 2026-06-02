@@ -48,7 +48,7 @@ function useSessionActions({ sessionId, title, pinned = false, onPin, onArchive,
     {
       disabled: !onPin,
       icon: 'pin',
-      label: pinned ? 'Unpin' : 'Pin',
+      label: pinned ? '取消固定' : '固定',
       onSelect: () => {
         triggerHaptic('selection')
         onPin?.()
@@ -57,17 +57,17 @@ function useSessionActions({ sessionId, title, pinned = false, onPin, onArchive,
     {
       disabled: !sessionId,
       icon: 'copy',
-      label: 'Copy ID',
+      label: '复制 ID',
       onSelect: event => {
         event.preventDefault()
         triggerHaptic('selection')
-        void writeClipboardText(sessionId).catch(err => notifyError(err, 'Could not copy session ID'))
+        void writeClipboardText(sessionId).catch(err => notifyError(err, '无法复制会话 ID'))
       }
     },
     {
       disabled: !sessionId,
       icon: 'cloud-download',
-      label: 'Export',
+      label: '导出',
       onSelect: () => {
         triggerHaptic('selection')
         void exportSession(sessionId, { title })
@@ -76,7 +76,7 @@ function useSessionActions({ sessionId, title, pinned = false, onPin, onArchive,
     {
       disabled: !sessionId,
       icon: 'edit',
-      label: 'Rename',
+      label: '重命名',
       onSelect: () => {
         triggerHaptic('selection')
         setRenameOpen(true)
@@ -85,7 +85,7 @@ function useSessionActions({ sessionId, title, pinned = false, onPin, onArchive,
     {
       disabled: !onArchive,
       icon: 'archive',
-      label: 'Archive',
+      label: '归档',
       onSelect: () => {
         triggerHaptic('selection')
         onArchive?.()
@@ -95,7 +95,7 @@ function useSessionActions({ sessionId, title, pinned = false, onPin, onArchive,
       className: 'text-destructive focus:text-destructive',
       disabled: !onDelete,
       icon: 'trash',
-      label: 'Delete',
+      label: '删除',
       onSelect: () => {
         triggerHaptic('warning')
         onDelete?.()
@@ -206,7 +206,7 @@ function RenameSessionDialog({ open, onOpenChange, sessionId, currentTitle }: Re
       notify({ durationMs: 2_000, kind: 'success', message: 'Renamed' })
       onOpenChange(false)
     } catch (err) {
-      notifyError(err, 'Rename failed')
+      notifyError(err, '重命名失败')
     } finally {
       setSubmitting(false)
     }

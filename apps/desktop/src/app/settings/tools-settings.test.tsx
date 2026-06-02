@@ -61,6 +61,6 @@ describe('ToolsSettings toolset toggle', () => {
     render(<ToolsSettings query="" />)
 
     await screen.findByRole('switch', { name: 'Toggle Web Search toolset' })
-    expect(screen.getByText('Configured')).toBeTruthy()
+    expect(screen.getByText('已配置')).toBeTruthy()
   })
 })

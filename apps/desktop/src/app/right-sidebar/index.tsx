@@ -30,8 +30,8 @@ interface RightSidebarTab {
 }
 
 const RIGHT_SIDEBAR_TABS: readonly RightSidebarTab[] = [
-  { id: 'files', label: 'File system', icon: 'files' },
-  { id: 'terminal', label: 'Terminal', icon: 'terminal' }
+  { id: 'files', label: '文件系统', icon: 'files' },
+  { id: 'terminal', label: '终端', icon: 'terminal' }
 ]
 
 export function RightSidebarPane({
@@ -50,7 +50,7 @@ export function RightSidebarPane({
         .split(/[\\/]+/)
         .filter(Boolean)
         .pop() ?? currentCwd)
-    : 'No folder selected'
+    : '未选择文件夹'
 
   const { data, loadChildren, openState, refreshRoot, rootError, rootLoading, setNodeOpen } = useProjectTree(currentCwd)
   const effectiveTab: RightSidebarTabId = terminalTakeover ? 'files' : activeTab
@@ -60,7 +60,7 @@ export function RightSidebarPane({
       defaultPath: hasCwd ? currentCwd : undefined,
       directories: true,
       multiple: false,
-      title: 'Change working directory'
+      title: '更改工作目录'
     })
 
     if (selected?.[0]) {
@@ -78,7 +78,7 @@ export function RightSidebarPane({
 
       setCurrentSessionPreviewTarget(preview, 'file-browser', path)
     } catch (error) {
-      notifyError(error, 'Preview unavailable')
+      notifyError(error, '预览不可用')
     }
   }
 
@@ -188,7 +188,7 @@ function FilesystemTab({
         <button
           className="flex min-w-0 flex-1 items-center rounded-md text-left hover:text-(--ui-text-secondary)"
           onClick={() => void onChangeFolder()}
-          title={hasCwd ? cwd : 'No folder selected'}
+          title={hasCwd ? cwd : '未选择文件夹'}
           type="button"
         >
           <SidebarPanelLabel>{cwdName}</SidebarPanelLabel>

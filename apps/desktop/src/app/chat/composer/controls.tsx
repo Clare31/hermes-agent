@@ -80,10 +80,10 @@ export function ComposerControls({
         </Button>
       ) : (
         <Button
-          aria-label={busy ? (busyAction === 'queue' ? 'Queue message' : 'Stop') : 'Send'}
+          aria-label={busy ? (busyAction === 'queue' ? '排队消息' : '停止') : '发送'}
           className={PRIMARY_ICON_BTN}
           disabled={disabled || !canSubmit}
-          title={busy ? (busyAction === 'queue' ? 'Queue message' : 'Stop') : 'Send'}
+          title={busy ? (busyAction === 'queue' ? '排队消息' : '停止') : '发送'}
           type="submit"
         >
           {busy ? (
@@ -115,19 +115,19 @@ function ConversationPill({
 
   const label =
     status === 'speaking'
-      ? 'Speaking'
+      ? '正在说话'
       : status === 'transcribing'
         ? 'Transcribing'
         : status === 'thinking'
-          ? 'Thinking'
+          ? '思考中'
           : muted
-            ? 'Muted'
-            : 'Listening'
+            ? '已静音'
+            : '正在聆听'
 
   return (
     <div className="ml-auto flex shrink-0 items-center gap-(--composer-control-gap)">
       <Button
-        aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}
+        aria-label={muted ? '取消麦克风静音' : '静音麦克风'}
         aria-pressed={muted}
         className={cn(GHOST_ICON_BTN, 'p-0', muted && 'bg-muted text-muted-foreground')}
         disabled={disabled}
@@ -136,7 +136,7 @@ function ConversationPill({
           onToggleMute()
         }}
         size="icon"
-        title={muted ? 'Unmute microphone' : 'Mute microphone'}
+        title={muted ? '取消麦克风静音' : '静音麦克风'}
         type="button"
         variant="ghost"
       >
@@ -221,7 +221,7 @@ function DictationButton({
   const active = state.active || status !== 'idle'
 
   const aria =
-    status === 'recording' ? 'Stop dictation' : status === 'transcribing' ? 'Transcribing dictation' : 'Voice dictation'
+    status === 'recording' ? '停止听写' : status === 'transcribing' ? '转录听写中' : '语音听写'
 
   return (
     <Button

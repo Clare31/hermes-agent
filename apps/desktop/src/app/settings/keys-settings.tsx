@@ -58,14 +58,14 @@ function EnvActions({
         <Button
           onClick={() => onReveal(varKey)}
           size="icon-xs"
-          title={isRevealed ? 'Hide value' : 'Reveal value'}
+          title={isRevealed ? '隐藏值' : '显示值'}
           variant="ghost"
         >
           {isRevealed ? <EyeOff /> : <Eye />}
         </Button>
       )}
       <Button onClick={onEdit} size="xs" variant="outline">
-        {info.is_set ? 'Replace' : 'Set'}
+        {info.is_set ? '替换' : '设置'}
       </Button>
       {info.is_set && (
         <Button
@@ -128,7 +128,7 @@ function EnvVarRow({
             <span className="font-mono text-xs font-medium">{varKey}</span>
             <Pill tone={info.is_set ? 'primary' : 'muted'}>
               {info.is_set && <Check className="size-3" />}
-              {info.is_set ? 'Set' : 'Not set'}
+              {info.is_set ? '设置' : '未设置'}
             </Pill>
           </div>
           <p className="mt-1 text-xs leading-5 text-muted-foreground">{info.description}</p>
@@ -161,13 +161,13 @@ function EnvVarRow({
             autoFocus
             className={cn('min-w-56 flex-1 font-mono', CONTROL_TEXT)}
             onChange={e => setEdits(c => ({ ...c, [varKey]: e.target.value }))}
-            placeholder={info.is_set ? 'Replace current value' : 'Enter value'}
+            placeholder={info.is_set ? '替换当前值' : '输入值'}
             type={info.is_password ? 'password' : 'text'}
             value={edits[varKey]}
           />
           <Button disabled={saving === varKey || !edits[varKey]} onClick={() => onSave(varKey)} size="sm">
             <Save />
-            {saving === varKey ? 'Saving' : 'Save'}
+            {saving === varKey ? '保存中' : '保存'}
           </Button>
           <Button onClick={() => setEdits(c => withoutKey(c, varKey))} size="sm" variant="outline">
             <Codicon name="close" />
@@ -199,7 +199,7 @@ function EnvProviderGroup({
         <span className="flex min-w-0 items-center gap-2">
           <Zap className="size-4 shrink-0 text-muted-foreground" />
           <span className="truncate text-sm font-medium">
-            {group.name === 'Other' ? 'Other providers' : group.name}
+            {group.name === '其他' ? '其他提供商' : group.name}
           </span>
           {setCount > 0 && <Pill tone="primary">{setCount} set</Pill>}
         </span>
@@ -255,7 +255,7 @@ export function KeysSettings({ query }: SearchProps) {
           setVars(next)
         }
       } catch (err) {
-        notifyError(err, 'API keys failed to load')
+        notifyError(err, 'API 密钥加载失败')
       }
     })()
 
@@ -319,9 +319,9 @@ export function KeysSettings({ query }: SearchProps) {
     const q = query.trim().toLowerCase()
 
     const labels: Record<string, string> = {
-      tool: 'Tools',
-      messaging: 'Messaging',
-      setting: 'Settings'
+      tool: '工具',
+      messaging: '消息',
+      setting: '设置'
     }
 
     return ['tool', 'messaging', 'setting'].flatMap(cat => {
@@ -355,7 +355,7 @@ export function KeysSettings({ query }: SearchProps) {
       await setEnvVar(key, value)
       patchVar(key, { is_set: true, redacted_value: redactedValue(value) })
       clearLocalState(key)
-      notify({ kind: 'success', title: 'Credential saved', message: `${key} updated.` })
+      notify({ kind: 'success', title: '凭据已保存', message: `${key} updated.` })
     } catch (err) {
       notifyError(err, `Failed to save ${key}`)
     } finally {
@@ -374,7 +374,7 @@ export function KeysSettings({ query }: SearchProps) {
       await deleteEnvVar(key)
       patchVar(key, { is_set: false, redacted_value: null })
       clearLocalState(key)
-      notify({ kind: 'success', title: 'Credential removed', message: `${key} removed.` })
+      notify({ kind: 'success', title: '凭据已移除', message: `${key} removed.` })
     } catch (err) {
       notifyError(err, `Failed to remove ${key}`)
     } finally {
@@ -417,7 +417,7 @@ export function KeysSettings({ query }: SearchProps) {
     <SettingsContent>
       <div className="mb-4 flex justify-end">
         <Button onClick={() => setShowAdvanced(s => !s)} size="sm" variant="outline">
-          {showAdvanced ? 'Hide advanced' : 'Show advanced'}
+          {showAdvanced ? '隐藏高级' : '显示高级'}
         </Button>
       </div>
 
